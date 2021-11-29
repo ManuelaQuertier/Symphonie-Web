@@ -1,8 +1,9 @@
 $primary: #365D96;
-$dark: #214A71;
+$dark: #132a3f;
 $light: white;
 
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chakra+Petch:wght@300&family=Ropa+Sans:ital@1&display=swap');
 
 $theme-colors: (
   "primary": $primary,
@@ -11,10 +12,25 @@ $theme-colors: (
 );
 
 body {
-    background-color: $light;
-    color: $dark;
+    background-color: $dark;
+    color: $light;
 }
-.navbar-expand-lg {
-    display: flex !important;
-    justify-content: space-between !important;
+h1 {
+  font-family: 'Bebas Neue', cursive;
+  font-size: 5rem;
+  margin-bottom: 0 !important;
+}
+a {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 1.6rem;
+}
+nav {
+  background-image: url("/assets/images/banner.jpg") !important;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: $light;
+  font-weight: bold;
 }
