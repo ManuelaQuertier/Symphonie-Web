@@ -1,15 +1,10 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Wild Series
-{% endblock %}
-
+{% block title %}Catégorie {{ categoryName }} {% endblock %}
 
 {% block body %}
 
-	<h1>{{ website }}
-		index</h1>
-
-	{% for program in programs %}
+{% for program in programs %}
 		<div>
 			<a href="{{ path('program_show', {id: program.id}) }}"><h2>{{ loop.index }}
 				/
@@ -21,9 +16,9 @@
 	{% else %}
 		Aucun série trouvée.
 	{% endfor %}
-	<a href="{{ path('app_index') }}">
+<a href="{{ path('category_index') }}">
 
-		Retour à l'accueil
+        Retour à la liste des Categories
 
-	</a>
+    </a>
 {% endblock %}
