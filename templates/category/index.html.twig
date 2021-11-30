@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+{% for category in categories %}
+	<ul>
+		<li><a href="{{ path('category_show', {categoryName: category.name}) }}">{{ loop.index}} / {{category.name}}</a></li>
+	</ul>
+{% endfor %}
+{% endblock %}
