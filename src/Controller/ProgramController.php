@@ -92,10 +92,7 @@ class ProgramController extends AbstractController
     public function showSeason(Program $program, Season $season): Response
     {
 
-        $episodes = $this->getDoctrine()
-            ->getRepository(Episode::class)
-            ->findBy(['season' => $season->getId()]);
-
+        $episodes = $season->getEpisodes();
         return $this->render('program/season_show.html.twig', [
             'program' => $program,
             'season' => $season,
