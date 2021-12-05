@@ -1,37 +1,41 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Série #
-	{{ program.id }}
+{% block title %}
+	{{ program.title }}
 {% endblock %}
 
 {% block body %}
-
-	<div class="media">
-
-		<img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-
-		<div class="media-body">
-
-			<h1 class="mt-0">{{ program.title }}</h1>
-
-			<p>{{ program.summary }}</p>
-
-			<p>Catégorie :
-				{{ program.category.name }}</p>
-
-		</div>
-
+	<div class="d-flex justify-content-end my-3">
+		<a href="{{ path('program_index') }}">
+			Retour à la liste des séries
+		</a>
 	</div>
-<ul>
-    {% for season in seasons %}
-    <li><a href="{{ path('program_season_show', {program: program.id, season: season.id}) }}">Saison n° {{ season.number }}</a></li>       
-    {% endfor %}</ul>
+	<div class="media container-fluid border border-primary">
+		<div class="row  d-flex align-items-center">
+			<div class="col-4 text-center">
+				<img class="" style="width: 20vw;" src="{{program.poster}}" alt="{{ program.title }} poster">
+				<h3>Catégorie :
+					{{ program.category.name }}</h3>
 
-
-	<a href="{{ path('program_index') }}">
-
-		Retour à la liste des programmes
-
+			</div>
+			<div class="col-8 container">
+				<div class="row">
+					<h1 style="font-size: 4rem;" class="mt-0">{{ program.title }}</h1>
+					<p>{{ program.summary }}</p>
+				</div>
+				<div class="row my-5">
+					{% for season in seasons %}
+						<div class="col-4">
+							<a href="{{ path('program_season_show', {program: program.id, season: season.id}) }}">Saison n°
+								{{ season.number }}</a>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
+	<a href="/season/new">
+		<p>Ajouter une saison</p>
 	</a>
-
 {% endblock %}

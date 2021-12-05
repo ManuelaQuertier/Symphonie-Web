@@ -1,21 +1,40 @@
 {% extends "base.html.twig" %}
 
+{% block title %}Saison {{ season.number}}/
+	{{ program.title }}
+{% endblock %}
+
 {% block body %}
-<h1> {{ program.title}}</h1>
-<h2> Saison {{ season.number}}</h2>
+<div class="d-flex justify-content-between my-5">
+	<h1 style="font-size: 4rem;">
+		{{ program.title}}</h1>
+	<h2>
+		Saison
+		{{ season.number}}</h2>
+		</div>
+	<div class="d-flex justify-content-end my-3">
+		<a href="{{ path('program_show', {id: program.id}) }}" >
+			Retour à la série
+			{{ program.title }}
+		</a>
+	</div>
 
-
-{% for episode in episodes %}
-<div>
-<a href="{{path('program_episode_show', {program: program.id, season:season.id, episode: episode.id}) }}"><h3>Episode {{episode. number}} / {{episode.title}}</h3></a>
-<p> Synopsis: {{ episode.synopsis }}</p>
-</div>
-{% endfor %}
-
-
-<a href="{{ path('program_show', {id: program.id}) }}">
-
-		Retour à la liste des saisons
-
-	</a>
+	<div class="container" style="width: 50vw;">
+		{% for episode in episodes %}
+			<div class="my-5">
+				<a href="{{path('program_episode_show', {program: program.id, season:season.id, episode: episode.id}) }}" >
+					<h3>Episode
+						{{episode. number}}
+						/
+						{{episode.title}}</h3>
+				</a>
+				<p>
+					Synopsis:
+					{{ episode.synopsis }}</p>
+			</div>
+		{% endfor %}
+	</div>
+	<a href="/episode/new">
+					<p>Ajouter un épisode</p>
+				</a>
 {% endblock %}

@@ -5,25 +5,29 @@
 
 
 {% block body %}
-
-	<h1>{{ website }}
-		index</h1>
-
-	{% for program in programs %}
-		<div>
-			<a href="{{ path('program_show', {id: program.id}) }}"><h2>{{ loop.index }}
-				/
-				{{ program.title }}
-				- Catégorie :
-				{{ program.category.name }}</h2></a>
-			<p>{{ program.summary }}</p>
-		</div>
-	{% else %}
-		Aucun série trouvée.
-	{% endfor %}
+	<h1 class="mt-3" style="font-size: 4rem;">Index des séries</h1>
+	<div class="d-flex justify-content-end mb-5">
 	<a href="{{ path('app_index') }}">
-
 		Retour à l'accueil
-
-	</a>
+	</a></div>
+	<div class="container-fluid">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+			{% for program in programs %}
+				<div class="col mb-3">
+					<div class="card mx-3" style="width: 22rem;">
+						<img class="card-img-top" style="height: 25rem" src="{{program.poster}}" alt="{{ program.title }} poster">
+						<div class="card-body">
+							<a href="{{ path('program_show', {id: program.id}) }}">
+								<h4 class="card-title">{{ program.title }}</h4>
+							</a>
+							<h6 class="card-subtitle mb-2 text-muted">Catégorie :{{ program.category.name }}</h6>
+							<p class="card-text text-dark text-truncate">{{ program.summary }}</p>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				Aucun série trouvée.
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}
