@@ -1,17 +1,26 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h1> {{ program.title}}</h1>
-<h2> Saison {{ season.number}}</h2>
-<h2> Episode {{ episode.number}}</h2>
+	<div class="d-flex justify-content-around">
+		<h1 style="font-size: 4rem;">
+			{{ program.title}}</h1>
+		<h2>
+			Saison
+			{{ season.number}}</h2>
+	</div>
+	<div class="d-flex justify-content-end my-3">
+		<a href="{{ path('program_season_show', {program:program.id, season: season.id}) }}">
+			Retour à la liste des épisodes
+		</a>
+	</div>
+	<div class="container my-5">
+		<h2>
+			Episode
+			{{ episode.number}}</h2>
 
-<h3>{{episode.title}}</h3>
-<p> Synopsis: {{ episode.synopsis }}</p>
-</div>
-
-<a href="{{ path('program_season_show', {program:program.id, season: season.id}) }}">
-
-		Retour à la liste des saisons
-
-	</a>
+		<h3 class="mb-5">{{episode.title}}</h3>
+		<p>
+			Synopsis:
+			{{ episode.synopsis }}</p>
+	</div>
 {% endblock %}

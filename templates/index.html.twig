@@ -1,10 +1,46 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-
-<h1>Bienvenue !</h1>
-<a href="/program/"><p>Index des séries</p></a>
-<a href="/program/new"><p>Ajouter une série</p></a>
-<a href="/category/new"><p>Ajouter une catégorie</p></a>
-
+	<div class="container mt-5">
+		<h1 style="font-size: 4rem;">Top 10 séries</h1>
+			<div class="container-fluid">
+				<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 justify-content-center">
+					{% for item in data |slice(0, 10) %}
+						<div class="col mx-5">
+							<div class="card" style="width: 22rem;">
+								<img class="card-img-top" style="height: 25rem" src="{{item.image}}" alt="{{ item.title }} poster">
+								<div class="card-body" style="height: 11rem;">
+									<a href="#"><h3 class="card-title text-dark">
+										{{item.rank}}
+										/
+										{{ item.title }}
+									</h3></a>
+									<h4 class="text-primary">Note ={{ item.imDbRating}}/10
+										<h6 class="card-subtitle mb-2 text-muted">Avec :{{ item.crew }}</h6>
+								</div>
+							</div>
+							</div>
+					{% else %}
+							Aucun série trouvée.
+					{% endfor %}
+				</div>
+			</div>
+		<div class="row text-center mt-3">
+			<div class="col-4">
+				<a href="/program/">
+					<p>Index des séries</p>
+				</a>
+			</div>
+			<div class="col-4">
+				<a href="/program/new">
+					<p>Ajouter une série</p>
+				</a>
+			</div>
+			<div class="col-4">
+				<a href="/category/new">
+					<p>Ajouter une catégorie</p>
+				</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

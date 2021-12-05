@@ -7,6 +7,7 @@ use App\Entity\Program;
 use App\Form\CategoryType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\CategoryRepository;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,7 +40,7 @@ class CategoryController extends AbstractController
      *
      * @Route("/new", name="new")
      */
-    public function new(Request $request) : Response
+    public function new(Request $request, CategoryRepository $categoryRepository) : Response
     {
         $category = new Category();
         $form = $this->createForm(CategoryType::class, $category);
@@ -53,6 +54,7 @@ class CategoryController extends AbstractController
 
         return $this->render('category/new.html.twig', [
             "form" => $form->createView(),
+            'categories' => $categoryRepository->findAll()
         ]);
 
     }
@@ -61,7 +63,7 @@ class CategoryController extends AbstractController
      * @Route("/{categoryName}", name="show")
      * @return Response
      */
-    public function show(string $categoryName): Response
+    public function show(string $categoryName, CategoryRepository $categoryRepository): Response
     {
         $category = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -77,11 +79,11 @@ class CategoryController extends AbstractController
             ->findBy(
                 ['Category' => $category->getId()],
                 ['Category' => 'DESC'],
-                3,
             );
         return $this->render('category/show.html.twig', [
             'programs' => $programs,
-            'categoryName' => $categoryName
+            'categoryName' => $categoryName,
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Episode;
 use App\Form\EpisodeType;
 use App\Repository\EpisodeRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,17 +20,18 @@ class EpisodeController extends AbstractController
     /**
      * @Route("/", name="episode_index", methods={"GET"})
      */
-    public function index(EpisodeRepository $episodeRepository): Response
+    public function index(EpisodeRepository $episodeRepository, CategoryRepository $categoryRepository): Response
     {
         return $this->render('episode/index.html.twig', [
             'episodes' => $episodeRepository->findAll(),
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 
     /**
      * @Route("/new", name="episode_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
@@ -45,23 +47,25 @@ class EpisodeController extends AbstractController
         return $this->renderForm('episode/new.html.twig', [
             'episode' => $episode,
             'form' => $form,
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 
     /**
      * @Route("/{id}", name="episode_show", methods={"GET"})
      */
-    public function show(Episode $episode): Response
+    public function show(Episode $episode, CategoryRepository $categoryRepository): Response
     {
         return $this->render('episode/show.html.twig', [
             'episode' => $episode,
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="episode_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Episode $episode, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Episode $episode, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
@@ -75,6 +79,7 @@ class EpisodeController extends AbstractController
         return $this->renderForm('episode/edit.html.twig', [
             'episode' => $episode,
             'form' => $form,
+            'categories' => $categoryRepository->findAll()
         ]);
     }
 

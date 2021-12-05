@@ -1,24 +1,34 @@
 {% extends "base.html.twig" %}
 
-{% block title %}Catégorie {{ categoryName }} {% endblock %}
+{% block title %}Catégorie
+	{{ categoryName }}
+{% endblock %}
 
 {% block body %}
-
-{% for program in programs %}
-		<div>
-			<a href="{{ path('program_show', {id: program.id}) }}"><h2>{{ loop.index }}
-				/
-				{{ program.title }}
-				- Catégorie :
-				{{ program.category.name }}</h2></a>
-			<p>{{ program.summary }}</p>
+	<div class="container-fluid mt-5">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+			{% for program in programs %}
+				<div class="col mb-3">
+					<div class="card mx-3" style="width: 22rem;">
+						<img class="card-img-top" style="height: 25rem" src="{{program.poster}}" alt="{{ program.title }} poster">
+						<div class="card-body">
+							<a href="{{ path('program_show', {id: program.id}) }}">
+								<h4>{{ program.title }}</h4>
+							</a>
+							<h6 class="card-subtitle mb-2 text-muted">Catégorie :{{ program.category.name }}</h6>
+							<p class="card-text text-dark text-truncate">{{ program.summary }}</p>
+						</div>
+					</div>
+				</div>
+			{% else %}
+				Aucun série trouvée.
+			{% endfor %}
 		</div>
-	{% else %}
-		Aucun série trouvée.
-	{% endfor %}
-<a href="{{ path('category_index') }}">
+	</div>
 
-        Retour à la liste des Categories
+	<a href="{{ path('category_index') }}">
 
-    </a>
+		Retour à la liste des Categories
+
+	</a>
 {% endblock %}

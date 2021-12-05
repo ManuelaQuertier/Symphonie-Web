@@ -1,9 +1,10 @@
-$primary: #365D96;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chakra+Petch:wght@300&family=Ropa+Sans:ital@1&display=swap');
+
+$primary: #84ace9;
 $dark: #132a3f;
 $light: white;
 
 @import "~bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Chakra+Petch:wght@300&family=Ropa+Sans:ital@1&display=swap');
 
 $theme-colors: (
   "primary": $primary,
@@ -20,6 +21,7 @@ h1 {
   font-size: 5rem;
   margin-bottom: 0 !important;
 }
+
 a {
   font-family: 'Chakra Petch', sans-serif;
   font-size: 1.6rem;
@@ -34,3 +36,4 @@ nav {
   color: $light;
   font-weight: bold;
 }
+
