@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Review
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<h2>Ajouter un nouvel avis</h2>
+
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<button class="btn btn-primary">{{ button_label|default('Ajouter') }}</button>
+		{{ form_end(form) }}
+
+
+		<a href="{{ path('review_index') }}">back to list</a>
+	</div>
+{% endblock %}

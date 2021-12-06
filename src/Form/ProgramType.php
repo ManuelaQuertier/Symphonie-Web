@@ -18,18 +18,19 @@ class ProgramType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', TextType::class)
-            ->add('summary', TextareaType::class)
-            ->add('poster', TextType::class)
-            ->add('country', TextType::class)
-            ->add('year', IntegerType::class)
-            ->add('Category', null, ['choice_label' => 'name'])
+            ->add('title', TextType::class, ['label' => 'Nom'])
+            ->add('summary', TextareaType::class, ['label' => 'Synopsis'])
+            ->add('poster', TextType::class,['label' => 'Image'])
+            ->add('country', TextType::class, ['label' => 'Pays'])
+            ->add('year', IntegerType::class, ['label' => 'Année de sortie'])
+            ->add('Category', null, ['choice_label' => 'name', 'label' => 'Genre'])
             ->add('actors', EntityType::class, [
                 'class' => Actor::class,
                 'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
                 'by_reference' => false,
+                'label' => 'Casting'
             ])
         ;
     }

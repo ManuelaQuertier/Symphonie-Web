@@ -9,6 +9,7 @@ use App\Form\ProgramType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\CategoryRepository;
+use App\Repository\ReviewRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,7 +67,7 @@ class ProgramController extends AbstractController
      * @Route("/{id}", methods={"GET"}, requirements={"id"="\d+"}, name="show")
      * @return Response
      */
-    public function show(Program $program, CategoryRepository $categoryRepository): Response
+    public function show(Program $program, CategoryRepository $categoryRepository, ReviewRepository $reviewRepository): Response
 
     {
 
@@ -81,11 +82,15 @@ class ProgramController extends AbstractController
             ->findBy(
                 ['program' => $program->getId()]
             );
+        
 
         return $this->render('program/show.html.twig', [
             'program' => $program,
             'seasons' => $seasons,
-            'categories' => $categoryRepository->findAll()
+            'categories' => $categoryRepository->findAll(),
+            'reviews' => $reviewRepository->findBy(
+                ['program' => $program->getId()]
+            )
         ]);
     }
 
