@@ -45,7 +45,16 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="container-fluid reviews border border-primary mt-5">
+	<h3 class="mb-4">Avis</h3>
+	{% for review in reviews %}
+	<div>
+	<h6>{{ review.author}} - note: {{ review.note}}/10</h6>
+	<p>{{ review.reviewText }}</p>
+	<p class="text-primary">{{review. date |date("m/d/Y") }}</p>
+	</div>
+		{% endfor %}
+	</div>
 	<a href="{{ path('program_edit', {'id': program.id}) }}">edit</a>
 	<a href="/season/new">
 		<p>Ajouter une saison</p>
