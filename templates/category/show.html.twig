@@ -12,7 +12,7 @@
 					<div class="card mx-3" style="width: 22rem;">
 						<img class="card-img-top" style="height: 25rem" src="{{program.poster}}" alt="{{ program.title }} poster">
 						<div class="card-body">
-							<a href="{{ path('program_show', {id: program.id}) }}">
+							<a href="{{ path('program_show', {slug: program.slug}) }}">
 								<h4>{{ program.title }}</h4>
 							</a>
 							<h6 class="card-subtitle mb-2 text-muted">Catégorie :{{ program.category.name }}</h6>

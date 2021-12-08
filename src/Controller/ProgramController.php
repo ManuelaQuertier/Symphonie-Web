@@ -6,7 +6,9 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
+use App\Service\Slugify;
 
+use Symfony\Component\Mime\Email;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\CategoryRepository;
 use App\Repository\ReviewRepository;
@@ -14,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
 
 /**
  * @Route("/program", name="program_")
@@ -44,15 +47,32 @@ class ProgramController extends AbstractController
      *
      * @Route("/new", name="new")
      */
-    public function new(Request $request, CategoryRepository $categoryRepository): Response
+    public function new(Request $request, CategoryRepository $categoryRepository, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
+
         $form = $this->createForm(ProgramType::class, $program);
+
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
+
             $entityManager->persist($program);
             $entityManager->flush();
+
+            $email = (new Email())
+
+                ->from($this->getParameter('mailer_from'))
+                ->to('your_email@example.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('program/newProgramEmail.html.twig', ['program' => $program]));
+
+
+        $mailer->send($email);
+            
             return $this->redirectToRoute('program_index');
         }
 
@@ -64,8 +84,7 @@ class ProgramController extends AbstractController
 
     /**
 
-     * @Route("/{id}", methods={"GET"}, requirements={"id"="\d+"}, name="show")
-     * @return Response
+     * @Route("/{slug}", methods={"GET"}, name="show")
      */
     public function show(Program $program, CategoryRepository $categoryRepository, ReviewRepository $reviewRepository): Response
 
@@ -97,7 +116,6 @@ class ProgramController extends AbstractController
     /**
 
      * @Route("/{program}/seasons/{season}", name="season_show")
-     * @return Response
      */
     public function showSeason(Program $program, Season $season, CategoryRepository $categoryRepository): Response
     {
@@ -113,7 +131,6 @@ class ProgramController extends AbstractController
 
     /**
      * @Route("/{program}/season/{season}/episode/{episode}", name="episode_show")
-     * @return Response
      */
     public function showEpisode(Program $program, Season $season, Episode $episode, CategoryRepository $categoryRepository): Response
     {
@@ -126,7 +143,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     * @Route("/{slug}/edit", name="edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Program $program, EntityManagerInterface $entityManager, CategoryRepository $categoryRepository): Response
     {
